@@ -1,0 +1,8 @@
+{
+  "presets": ["es2015", "react", "stage-2"],
+  "plugins": [
+    ["module-resolver", {"alias": {"next-url-prettifier": "./src"}}],
+    "transform-class-properties",
+    "transform-flow-strip-types"
+  ]
+}

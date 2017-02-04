@@ -1,2 +1,104 @@
-# next-url-prettifier
-Url prettifier for Next Framework
+# Url prettifier for Next Framework
+
+[![npm version](https://d25lcipzij17d.cloudfront.net/badge.svg?id=js&type=6&v=1.0.0&x2=0)](https://www.npmjs.com/package/next-url-prettifier)
+
+Easy to use url prettifier for [next.js](https://github.com/zeit/next.js).
+
+## Why you should use it
+- It's flow typed and well tested
+- On server-side, use the parameter matching you want (Express.js or else)
+- It's extendable (you can use the query stringfier you want)
+- No dependencies
+
+## How to use
+
+#### Install:
+```bash
+npm i --save next-url-prettifier
+```
+
+#### Create `routes.js` inside your project root:
+```javascript
+// routes.js
+import UrlPrettifier from 'next-url-prettifier';
+
+const routes = [
+  {
+    page: 'index',
+    prettyUrl: '/home'
+  },
+  {
+    page: 'greeting',
+    prettyUrl: ({lang = '', name = ''}) =>
+      (lang === 'fr' ? `/bonjour/${name}` : `/hello/${name}`),
+    prettyUrlPatterns: [
+      {pattern: '/hello/:name', defaultParams: {lang: 'en'}},
+      {pattern: '/bonjour/:name', defaultParams: {lang: 'fr'}}
+    ]
+  }
+];
+
+const urlPrettifier = new UrlPrettifier(routes);
+export default routes;
+export {urlPrettifier as Router};
+```
+
+#### In your components:
+```javascript
+// pages/greeting.js
+import React from 'react';
+import Link from 'next-url-prettifier/link';
+import {Router} from '../routes';
+
+export default class GreetingPage extends React.Component {
+  static getInitialProps({query: {lang, name}}) {
+    return {lang, name};
+  }
+
+  renderSwitchLangageLink() {
+    const {lang, name} = this.props;
+    const switchLang = lang === 'fr' ? 'en' : 'fr';
+    return (
+      <Link route={Router.linkPage('greeting', {name, lang: switchLang})}>
+        <a>{switchLang === 'fr' ? 'Français' : 'English'}</a>
+      </Link>
+    );
+  }
+
+  render() {
+    const {lang, name} = this.props;
+    return (
+      <div>
+        <h1>{lang === 'fr' ? 'Bonjour' : 'Hello'} {name}</h1>
+        <div>{this.renderSwitchLangageLink()}</div>
+      </div>
+    );
+  }
+}
+```
+
+#### In your `server.js` file (example with Express.js):
+```javascript
+// server.js
+import express from 'express';
+import next from 'next';
+import {Router} from './routes';
+
+const dev = process.env.NODE_ENV !== 'production';
+const port = parseInt(process.env.PORT, 10) || 3000;
+const app = next({dev});
+const handle = app.getRequestHandler();
+
+app.prepare()
+  .then(() => {
+    const server = express();
+
+    Router.forEachPattern((page, pattern, defaultParams) => server.get(pattern, (req, res) =>
+      app.render(req, res, `/${page}`, {...defaultParams, ...req.query, ...req.params})
+    ));
+
+    server.get('*', (req, res) => handle(req, res));
+    server.listen(port);
+  })
+;
+```

@@ -1,0 +1,10 @@
+[ignore]
+
+[include]
+
+[libs]
+flow-typed
+
+[options]
+suppress_comment= \\(.\\|\n\\)*\\$FlowIgnore
+module.name_mapper='^\next-url-prettifier/\(.*\)$' -> '<PROJECT_ROOT>/src/\1'
