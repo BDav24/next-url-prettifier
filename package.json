@@ -1,18 +1,31 @@
 {
   "name": "next-url-prettifier",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Url prettifier for Next Framework",
-  "main": "dist/index.js",
-  "files": ["dist"],
+  "main": "lib/index.js",
+  "files": [
+    "lib",
+    "src"
+  ],
   "repository": "https://github.com/BDav24/next-url-prettifier.git",
   "author": "BDav24",
   "license": "MIT",
-  "keywords": ["next", "next.js", "nextjs", "pretty-url", "react", "route", "routes", "router"],
+  "keywords": [
+    "next",
+    "next.js",
+    "nextjs",
+    "pretty-url",
+    "react",
+    "route",
+    "routes",
+    "router"
+  ],
   "scripts": {
-    "build": "babel src --out-dir dist",
-    "lint": "eslint --ignore-pattern 'flow-typed' --ignore-pattern 'dist' .",
+    "build": "babel src --out-dir lib",
+    "lint": "eslint --ignore-pattern 'flow-typed' --ignore-pattern 'lib' .",
     "flow": "flow",
     "flow-typed": "flow-typed",
+    "prepublish": "npm run build",
     "test": "jest --coverage"
   },
   "peerDependencies": {
@@ -30,6 +43,7 @@
     "babel-preset-stage-2": "^6.22.0",
     "enzyme": "^2.7.1",
     "eslint": "^3.14.1",
+    "eslint-config-airbnb": "^14.0.0",
     "eslint-plugin-flowtype": "^2.30.0",
     "eslint-plugin-react": "^6.9.0",
     "flow-bin": "^0.38.0",

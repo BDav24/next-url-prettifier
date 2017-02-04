@@ -1,12 +1,14 @@
 # Url prettifier for Next Framework
 
-[![npm version](https://d25lcipzij17d.cloudfront.net/badge.svg?id=js&type=6&v=1.0.0&x2=0)](https://www.npmjs.com/package/next-url-prettifier)
+[![npm version](https://d25lcipzij17d.cloudfront.net/badge.svg?id=js&type=6&v=1.0.1&x2=0)](https://www.npmjs.com/package/next-url-prettifier)
 
 Easy to use url prettifier for [next.js](https://github.com/zeit/next.js).
 
 ## Why you should use it
-- It's flow typed and well tested
+- Good integration with Next.js (only adds "href" and "as" props to existing Link)
 - On server-side, use the parameter matching you want (Express.js or else)
+- Handles reverse routing
+- It's flow typed and well tested
 - It's extendable (you can use the query stringfier you want)
 - No dependencies
 
@@ -20,7 +22,7 @@ npm i --save next-url-prettifier
 #### Create `routes.js` inside your project root:
 ```javascript
 // routes.js
-import UrlPrettifier from 'next-url-prettifier';
+const UrlPrettifier = require('next-url-prettifier').default;
 
 const routes = [
   {
@@ -39,15 +41,15 @@ const routes = [
 ];
 
 const urlPrettifier = new UrlPrettifier(routes);
-export default routes;
-export {urlPrettifier as Router};
+exports.default = routes;
+exports.Router = urlPrettifier;
 ```
 
 #### In your components:
 ```javascript
 // pages/greeting.js
 import React from 'react';
-import Link from 'next-url-prettifier/link';
+import Link from 'next-url-prettifier/lib/link';
 import {Router} from '../routes';
 
 export default class GreetingPage extends React.Component {
@@ -75,14 +77,19 @@ export default class GreetingPage extends React.Component {
     );
   }
 }
+
+GreetingPage.propTypes = {
+  lang: React.PropTypes.string,
+  name: React.PropTypes.string
+};
 ```
 
 #### In your `server.js` file (example with Express.js):
 ```javascript
 // server.js
-import express from 'express';
-import next from 'next';
-import {Router} from './routes';
+const express = require('express');
+const next = require('next');
+const Router = require('./routes').Router;
 
 const dev = process.env.NODE_ENV !== 'production';
 const port = parseInt(process.env.PORT, 10) || 3000;
@@ -94,7 +101,7 @@ app.prepare()
     const server = express();
 
     Router.forEachPattern((page, pattern, defaultParams) => server.get(pattern, (req, res) =>
-      app.render(req, res, `/${page}`, {...defaultParams, ...req.query, ...req.params})
+      app.render(req, res, `/${page}`, Object.assign({}, defaultParams, req.query, req.params))
     ));
 
     server.get('*', (req, res) => handle(req, res));
@@ -102,3 +109,8 @@ app.prepare()
   })
 ;
 ```
+
+## Examples:
+- [Basic with Express](./examples/basic-with-express)
+- [With Flowtype](./examples/with-flow)
+- [With qs as query stringifier](./examples/with-qs)

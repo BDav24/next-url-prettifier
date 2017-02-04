@@ -1,7 +1,7 @@
 /* @flow */
-import defaultParamsToQueryString from 'next-url-prettifier/utils/paramsToQueryString';
+import defaultParamsToQueryString from './utils/paramsToQueryString';
 // Types
-import type {RouteLinkParamsType} from 'next-url-prettifier/link';
+import type {RouteLinkParamsType} from './link';
 
 /* Types */
 export type ParamType = any;

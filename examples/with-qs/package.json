@@ -1,0 +1,12 @@
+{
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "^2.0.0-beta.23",
+    "next-url-prettifier": "^1.0.1",
+    "qs": "^6.3.0"
+  }
+}
