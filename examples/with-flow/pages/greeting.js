@@ -1,6 +1,6 @@
 /* @flow */
 import React from 'react';
-import Link from 'next-url-prettifier/src/link';
+import {Link} from 'next-url-prettifier';
 import {Router} from '../routes';
 
 type PropsType = {

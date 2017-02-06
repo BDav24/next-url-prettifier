@@ -1,6 +1,6 @@
 # Url prettifier for Next Framework
 
-[![npm version](https://d25lcipzij17d.cloudfront.net/badge.svg?id=js&type=6&v=1.0.1&x2=0)](https://www.npmjs.com/package/next-url-prettifier)
+[![npm version](https://d25lcipzij17d.cloudfront.net/badge.svg?id=js&type=6&v=1.0.2&x2=0)](https://www.npmjs.com/package/next-url-prettifier)
 
 Easy to use url prettifier for [next.js](https://github.com/zeit/next.js).
 
@@ -49,7 +49,7 @@ exports.Router = urlPrettifier;
 ```javascript
 // pages/greeting.js
 import React from 'react';
-import Link from 'next-url-prettifier/lib/link';
+import {Link} from 'next-url-prettifier';
 import {Router} from '../routes';
 
 export default class GreetingPage extends React.Component {

@@ -1,5 +1,6 @@
 /* @flow */
 import defaultParamsToQueryString from './utils/paramsToQueryString';
+import Link from './link';
 // Types
 import type {RouteLinkParamsType} from './link';
 
@@ -68,3 +69,5 @@ export default class UrlPrettifier<T: string> {
     });
   }
 }
+
+export {Link as Link};
