@@ -33,4 +33,10 @@ describe('PrettyLink', (): void => {
     expect(link.prop('as')).toBe('/page-pretty-url-1');
     expect(link.html()).toBe(nextLink.html());
   });
+
+  it('should only render children if no href is provided', (): void => {
+    const a: React.Element<*> = <a>label</a>;
+    expect(shallow(<PrettyLink>{a}</PrettyLink>).html())
+      .toEqual(shallow(a).html());
+  });
 });

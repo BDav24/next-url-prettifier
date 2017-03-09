@@ -29,7 +29,7 @@
     "test": "jest --coverage"
   },
   "peerDependencies": {
-    "next": "^2.0.0-beta.23",
+    "next": "^2.0.0-beta",
     "react": "^15.4.2"
   },
   "devDependencies": {
@@ -48,6 +48,9 @@
     "eslint-plugin-react": "^6.9.0",
     "flow-bin": "^0.38.0",
     "jest": "^18.1.0",
-    "react-addons-test-utils": "^15.4.2"
+    "next": "2.0.0-beta",
+    "react": "^15.4.2",
+    "react-addons-test-utils": "^15.4.2",
+    "react-dom": "^15.4.2"
   }
 }

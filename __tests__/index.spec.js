@@ -26,8 +26,16 @@ describe('UrlPrettifier options', (): void => {
 });
 
 describe('UrlPrettifier linkPage', (): void => {
-  it('should return href and as for the route', (): void => {
+  it('should return href and as for the route if prettyUrl is a function', (): void => {
     expect(router.linkPage('pageName', {id: 1}))
+      .toEqual({href: '/pageName?id=1', as: '/page-pretty-url-1'});
+  });
+
+  it('should return href and as for the route if prettyUrl is a string', (): void => {
+    const routerWithString: UrlPrettifier<*> = new UrlPrettifier([
+      {...route, prettyUrl: '/page-pretty-url-1'}
+    ]);
+    expect(routerWithString.linkPage('pageName', {id: 1}))
       .toEqual({href: '/pageName?id=1', as: '/page-pretty-url-1'});
   });
 

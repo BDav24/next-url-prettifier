@@ -4,6 +4,7 @@ import Link from 'next/link';
 
 /* Types */
 export type RouteLinkParamsType = {
+  children?: any,
   href?: string,
   as?: string
 };
@@ -18,7 +19,8 @@ export type PropsType = {
 export default class PrettyLink extends React.Component {
   props: PropsType;
 
-  render(): React.Element<*> {
-    return <Link {...this.props} {...this.props.route} />;
+  render(): ?React.Element<*> {
+    const {href, route, children}: PropsType = this.props;
+    return href || (route && route.href) ? <Link {...this.props} {...route} /> : children;
   }
 }
