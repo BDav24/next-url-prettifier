@@ -26,6 +26,7 @@
     "flow": "flow",
     "flow-typed": "flow-typed",
     "prepublish": "yarn run build",
+    "qa": "yarn run flow && yarn run test",
     "test": "jest --coverage"
   },
   "peerDependencies": {

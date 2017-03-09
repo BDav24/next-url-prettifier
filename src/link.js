@@ -4,7 +4,6 @@ import Link from 'next/link';
 
 /* Types */
 export type RouteLinkParamsType = {
-  children?: any,
   href?: string,
   as?: string
 };
@@ -12,6 +11,7 @@ export type RouteLinkParamsType = {
 type NextLinkPropsType = Object; // Next is not typed
 
 export type PropsType = {
+  children?: any,
   route?: RouteLinkParamsType
 } & NextLinkPropsType;
 
