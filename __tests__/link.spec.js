@@ -5,16 +5,13 @@ import NextLink from 'next/link';
 // Local
 import PrettyLink from 'next-url-prettifier/link';
 // Types
-import type {PropsType, RouteLinkParamsType} from 'next-url-prettifier/link';
+import type {RouteLinkParamsType} from 'next-url-prettifier/link';
 
 describe('PrettyLink', (): void => {
   it('should behave like next/link if route is not specified', (): void => {
-    const props: PropsType = {
-      href: 'http://example.com'
-    };
     const a: React.Element<*> = <a>label</a>;
-    expect(shallow(<PrettyLink {...props}>{a}</PrettyLink>).html())
-      .toBe(shallow(<NextLink {...props}>{a}</NextLink>).html());
+    expect(shallow(<PrettyLink href="http://example.com">{a}</PrettyLink>).html())
+      .toBe(shallow(<NextLink href="http://example.com">{a}</NextLink>).html());
   });
 
   it('should add href and as if route is specified', (): void => {
