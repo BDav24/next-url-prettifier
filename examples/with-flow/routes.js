@@ -1,6 +1,6 @@
 /* @flow */
-import UrlPrettifier from 'next-url-prettifier/src';
-import type {RouteType} from 'next-url-prettifier/src';
+import UrlPrettifier from 'next-url-prettifier';
+import type {RouteType} from 'next-url-prettifier';
 
 export type PageNameType = 'index' | 'greeting';
 
