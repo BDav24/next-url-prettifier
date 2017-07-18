@@ -20,7 +20,10 @@ export default class PrettyLink extends React.Component {
   props: PropsType;
 
   render(): ?React.Element<*> {
-    const {href, route, children}: PropsType = this.props;
-    return href || (route && route.href) ? <Link {...this.props} {...route} /> : children;
+    const {href, route, children, ...rest}: PropsType = this.props;
+    return href || (route && route.href)
+      ? <Link {...{...rest, href, children}} {...route} />
+      : children
+    ;
   }
 }
