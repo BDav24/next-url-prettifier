@@ -1,5 +1,7 @@
 [ignore]
+.*/examples/.*
 .*/babel-plugin-transform-react-remove-prop-types/src/.*
+.*/mitt/src/.*
 
 [include]
 
