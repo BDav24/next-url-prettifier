@@ -66,6 +66,15 @@ export default class GreetingPage extends React.Component {
         <a>{switchLang === 'fr' ? 'Français' : 'English'}</a>
       </Link>
     );
+    /*
+    Note: you can also use Next native Link and spread notation:
+    import Link from 'next/link';
+    return (
+      <Link {...Router.linkPage('greeting', {name, lang: switchLang})}>
+        <a>{switchLang === 'fr' ? 'Français' : 'English'}</a>
+      </Link>
+    );
+    */
   }
 
   render() {
