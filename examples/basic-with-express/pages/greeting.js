@@ -1,5 +1,6 @@
 import React from 'react';
 import {Link} from 'next-url-prettifier';
+import PropTypes from 'prop-types';
 import {Router} from '../routes';
 
 export default class GreetingPage extends React.Component {
@@ -29,6 +30,6 @@ export default class GreetingPage extends React.Component {
 }
 
 GreetingPage.propTypes = {
-  lang: React.PropTypes.string,
-  name: React.PropTypes.string
+  lang: PropTypes.string,
+  name: PropTypes.string
 };

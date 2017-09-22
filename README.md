@@ -49,6 +49,7 @@ exports.Router = urlPrettifier;
 ```javascript
 // pages/greeting.js
 import React from 'react';
+import PropTypes from 'prop-types';
 import {Link} from 'next-url-prettifier';
 import {Router} from '../routes';
 
@@ -79,8 +80,8 @@ export default class GreetingPage extends React.Component {
 }
 
 GreetingPage.propTypes = {
-  lang: React.PropTypes.string,
-  name: React.PropTypes.string
+  lang: PropTypes.string,
+  name: PropTypes.string
 };
 ```
 
