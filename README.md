@@ -1,5 +1,7 @@
 # Url prettifier for Next Framework
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/BDav24/next-url-prettifier.svg)](https://greenkeeper.io/)
+
 [![npm version](https://d25lcipzij17d.cloudfront.net/badge.svg?id=js&type=6&v=1.1.5&x2=0)](https://www.npmjs.com/package/next-url-prettifier)
 
 Easy to use url prettifier for [next.js](https://github.com/zeit/next.js).
