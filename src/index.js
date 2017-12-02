@@ -36,8 +36,8 @@ export default class UrlPrettifier<T: string> {
   }
 
   linkPage(pageName: T, params: ParamType): RouteLinkParamsType {
-    const route: ?RouteType<T> = this.routes.find((currentRoute: RouteType<T>): boolean =>
-      currentRoute.page === pageName);
+    const route: ?RouteType<T> = this.routes.filter((currentRoute: RouteType<T>): boolean =>
+      currentRoute.page === pageName)[0];
     return {
       href: `/${pageName}${this.paramsToQueryString(params)}`,
       ...(route && route.prettyUrl
