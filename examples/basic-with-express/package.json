@@ -7,7 +7,7 @@
   "dependencies": {
     "express": "^4.15.2",
     "next": "^2.0.0",
-    "next-url-prettifier": "^1.1.5",
+    "next-url-prettifier": "^1.1.6",
     "prop-types": "^15.5.10"
   }
 }

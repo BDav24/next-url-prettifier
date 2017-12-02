@@ -6,7 +6,7 @@
   },
   "dependencies": {
     "next": "^2.0.0",
-    "next-url-prettifier": "^1.1.5",
+    "next-url-prettifier": "^1.1.6",
     "qs": "^6.4.0"
   }
 }
