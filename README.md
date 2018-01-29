@@ -31,8 +31,10 @@ const routes = [
   },
   {
     page: 'greeting',
+    // `prettyUrl` is used on client side to construct the URL of your link
     prettyUrl: ({lang = '', name = ''}) =>
       (lang === 'fr' ? `/bonjour/${name}` : `/hello/${name}`),
+    // `prettyUrlPatterns` is used on server side to find which component/page to display
     prettyUrlPatterns: [
       {pattern: '/hello/:name', defaultParams: {lang: 'en'}},
       {pattern: '/bonjour/:name', defaultParams: {lang: 'fr'}}
