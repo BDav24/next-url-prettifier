@@ -1,7 +1,7 @@
 /* @flow */
 import React from 'react';
 
-export default function IndexPage(): React.Element<*> {
+export default function IndexPage() {
   return (
     <div>
       <h1>Homepage</h1>

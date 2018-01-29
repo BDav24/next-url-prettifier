@@ -1,7 +1,7 @@
 [ignore]
 .*/examples/.*
-.*/babel-plugin-transform-react-remove-prop-types/src/.*
-.*/mitt/src/.*
+.*/config-chain/test/.*
+.*/npmconf/test/.*
 
 [include]
 

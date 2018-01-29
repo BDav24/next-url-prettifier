@@ -16,10 +16,10 @@ export type PropsType = {
 } & NextLinkPropsType;
 
 /* Component */
-export default class PrettyLink extends React.Component {
+export default class PrettyLink extends React.Component<PropsType> {
   props: PropsType;
 
-  render(): ?React.Element<*> {
+  render() {
     const {href, route, children, ...rest}: PropsType = this.props;
     return href || (route && route.href)
       ? <Link {...{...rest, href, children}} {...route} />

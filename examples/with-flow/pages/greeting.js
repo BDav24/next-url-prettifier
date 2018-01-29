@@ -8,14 +8,14 @@ type PropsType = {
   name: ?string
 };
 
-export default class GreetingPage extends React.Component<*, *, *> {
+export default class GreetingPage extends React.Component<PropsType> {
   props: PropsType;
 
   static getInitialProps({query: {lang, name}}: {query: PropsType}): PropsType {
     return {lang, name};
   }
 
-  renderSwitchLangageLink(): React.Element<*> {
+  renderSwitchLangageLink() {
     const {lang, name}: PropsType = this.props;
     const switchLang: string = lang === 'fr' ? 'en' : 'fr';
     return (
@@ -25,7 +25,7 @@ export default class GreetingPage extends React.Component<*, *, *> {
     );
   }
 
-  render(): React.Element<*> {
+  render() {
     const {lang, name}: PropsType = this.props;
     return (
       <div>
