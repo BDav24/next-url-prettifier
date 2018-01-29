@@ -6,12 +6,12 @@
     "flow": "flow"
   },
   "dependencies": {
-    "express": "^4.15.2",
-    "next": "^2.0.0",
-    "next-url-prettifier": "^1.1.6"
+    "express": "^4.16.2",
+    "next": "^4.0.0",
+    "next-url-prettifier": "^1.2.0"
   },
   "devDependencies": {
     "babel-plugin-transform-flow-strip-types": "^6.22.0",
-    "flow-bin": "^0.42.0"
+    "flow-bin": "^0.64.0"
   }
 }
