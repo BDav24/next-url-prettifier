@@ -28,8 +28,8 @@
     "test": "jest --coverage"
   },
   "peerDependencies": {
-    "next": "^6",
-    "react": "^16"
+    "next": ">= 1",
+    "react": ">= 15"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -41,6 +41,7 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
     "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
     "eslint": "^4.16.0",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-flowtype": "^2.42.0",
@@ -52,8 +53,5 @@
     "react": "^16.2.0",
     "react-addons-test-utils": "^15.6.2",
     "react-dom": "^16.2.0"
-  },
-  "dependencies": {
-    "enzyme-adapter-react-16": "^1.1.1"
   }
 }
