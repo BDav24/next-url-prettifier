@@ -5,8 +5,10 @@
     "start": "next start"
   },
   "dependencies": {
-    "next": "^4.0.0",
-    "next-url-prettifier": "^1.2.0",
-    "qs": "^6.5.1"
+    "next": "*",
+    "next-url-prettifier": "*",
+    "qs": "*",
+    "react": "*",
+    "react-dom": "*"
   }
 }

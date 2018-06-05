@@ -5,9 +5,11 @@
     "start": "NODE_ENV=production node server.js"
   },
   "dependencies": {
-    "express": "^4.16.2",
-    "next": "^4.0.0",
-    "next-url-prettifier": "^1.2.0",
-    "prop-types": "^15.6.0"
+    "express": "*",
+    "next": "*",
+    "next-url-prettifier": "*",
+    "prop-types": "*",
+    "react": "*",
+    "react-dom": "*"
   }
 }
