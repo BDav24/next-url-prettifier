@@ -28,7 +28,7 @@
     "test": "jest --coverage"
   },
   "peerDependencies": {
-    "next": "^4",
+    "next": "^6",
     "react": "^16"
   },
   "devDependencies": {
