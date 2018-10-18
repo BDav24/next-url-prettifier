@@ -20,14 +20,14 @@ describe('UrlPrettifier options', (): void => {
     const routerWithCustomQs: UrlPrettifier<*> = new UrlPrettifier([route], {
       paramsToQueryString: ({id}: {id: number}): string => `/id/${id}`
     });
-    expect(routerWithCustomQs.linkPage('pageName', {id: 1}))
+    expect(routerWithCustomQs.getPrettyUrl('pageName', {id: 1}))
       .toEqual({href: '/pageName/id/1', as: '/page-pretty-url-1'});
   });
 });
 
-describe('UrlPrettifier linkPage', (): void => {
+describe('UrlPrettifier getPrettyUrl', (): void => {
   it('should return href and as for the route if prettyUrl is a function', (): void => {
-    expect(router.linkPage('pageName', {id: 1}))
+    expect(router.getPrettyUrl('pageName', {id: 1}))
       .toEqual({href: '/pageName?id=1', as: '/page-pretty-url-1'});
   });
 
@@ -35,12 +35,12 @@ describe('UrlPrettifier linkPage', (): void => {
     const routerWithString: UrlPrettifier<*> = new UrlPrettifier([
       {...route, prettyUrl: '/page-pretty-url-1'}
     ]);
-    expect(routerWithString.linkPage('pageName', {id: 1}))
+    expect(routerWithString.getPrettyUrl('pageName', {id: 1}))
       .toEqual({href: '/pageName?id=1', as: '/page-pretty-url-1'});
   });
 
   it('should return only href if the route does not exist', (): void => {
-    expect(router.linkPage('unknownPage', {id: 1}))
+    expect(router.getPrettyUrl('unknownPage', {id: 1}))
       .toEqual({href: '/unknownPage?id=1'});
   });
 });
@@ -75,10 +75,10 @@ describe('UrlPrettifier getPrettyUrlPatterns', (): void => {
   });
 });
 
-describe('Router forEachPattern', (): void => {
+describe('Router forEachPrettyPattern', (): void => {
   it('should iterate on each pattern', (): void => {
     const mockFunction = jest.fn();
-    router.forEachPattern(mockFunction);
+    router.forEachPrettyPattern(mockFunction);
     expect(mockFunction.mock.calls.length).toBe(2);
     expect(mockFunction).toHaveBeenCalledWith(route.page, patternString, undefined);
     expect(mockFunction).toHaveBeenCalledWith(route.page, '/page-pretty-url-one', {id: 1});
