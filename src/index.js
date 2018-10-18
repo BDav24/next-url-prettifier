@@ -35,7 +35,7 @@ export default class UrlPrettifier<T: string> {
     ;
   }
 
-  linkPage(pageName: T, params: ParamType): RouteLinkParamsType {
+  getPrettyUrl(pageName: T, params: ParamType): RouteLinkParamsType {
     const route: ?RouteType<T> = this.routes.filter((currentRoute: RouteType<T>): boolean =>
       currentRoute.page === pageName)[0];
     return {
@@ -45,6 +45,11 @@ export default class UrlPrettifier<T: string> {
         : {}
       )
     };
+  }
+
+  linkPage(pageName: T, params: ParamType): RouteLinkParamsType {
+    console.warn("linkPage() is deprecated. Use getPrettyUrl() instead.");
+    return this.getPrettyUrl(pageName, params);
   }
 
   getPrettyUrlPatterns(route: RouteType<T>): PrettyUrlPatternType[] {
