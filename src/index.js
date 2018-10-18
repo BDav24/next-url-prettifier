@@ -75,6 +75,7 @@ export default class UrlPrettifier<T: string> {
   }
 
   forEachPattern(apply: PatternFunctionType<T>): void {
+    console.warn("forEachPattern() is deprecated. Use forEachPrettyPattern() instead.");
     this.forEachPrettyPattern(apply);
   }
 }
