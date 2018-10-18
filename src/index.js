@@ -66,12 +66,16 @@ export default class UrlPrettifier<T: string> {
     ;
   }
 
-  forEachPattern(apply: PatternFunctionType<T>): void {
+  forEachPrettyPattern(apply: PatternFunctionType<T>): void {
     this.routes.forEach((route: RouteType<T>): void => {
       this.getPrettyUrlPatterns(route).forEach((pattern: PrettyUrlPatternType): any =>
         apply(route.page, pattern.pattern, pattern.defaultParams)
       );
     });
+  }
+
+  forEachPattern(apply: PatternFunctionType<T>): void {
+    this.forEachPrettyPattern(apply);
   }
 }
 
