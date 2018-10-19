@@ -7,11 +7,14 @@ import type {RouteLinkParamsType} from './link';
 /* Types */
 export type ParamType = any;
 export type PatternType = string;
+export type PrettyPatternType = {pattern: PatternType, defaultParams?: ParamType};
+// PrettyUrlPatternType is deprecated
 export type PrettyUrlPatternType = {pattern: PatternType, defaultParams?: ParamType};
 
 export type RouteType<PageNameType: string> = {
   page: PageNameType,
   prettyUrl?: string | (params: ParamType) => string,
+  prettyPatterns?: PatternType | (PatternType | PrettyPatternType)[],
   prettyUrlPatterns?: PatternType | (PatternType | PrettyUrlPatternType)[]
 };
 
@@ -41,8 +44,8 @@ export default class UrlPrettifier<T: string> {
     return {
       href: `/${pageName}${this.paramsToQueryString(params)}`,
       ...(route && route.prettyUrl
-        ? {as: typeof route.prettyUrl === 'string' ? route.prettyUrl : route.prettyUrl(params)}
-        : {}
+          ? {as: typeof route.prettyUrl === 'string' ? route.prettyUrl : route.prettyUrl(params)}
+          : {}
       )
     };
   }
@@ -55,21 +58,39 @@ export default class UrlPrettifier<T: string> {
 
   getPrettyUrlPatterns(route: RouteType<T>): PrettyUrlPatternType[] {
     return typeof route.prettyUrlPatterns === 'string'
-        ? [{pattern: route.prettyUrlPatterns}]
-        : Array.isArray(route.prettyUrlPatterns)
-          ? route.prettyUrlPatterns.map(
-            (pattern: PatternType | PrettyUrlPatternType): PrettyUrlPatternType =>
-              (typeof pattern === 'string' ? {pattern} : pattern)
-          )
-          : typeof route.prettyUrl === 'string'
-            ? [{pattern: route.prettyUrl}]
-            : []
-    ;
+      ? [{pattern: route.prettyUrlPatterns}]
+      : Array.isArray(route.prettyUrlPatterns)
+        ? route.prettyUrlPatterns.map(
+          (pattern: PatternType | PrettyUrlPatternType): PrettyUrlPatternType =>
+            (typeof pattern === 'string' ? {pattern} : pattern)
+        )
+        : typeof route.prettyUrl === 'string'
+          ? [{pattern: route.prettyUrl}]
+          : []
+      ;
+  }
+
+  getPrettyPatterns(route: RouteType<T>): PrettyPatternType[] {
+    return typeof route.prettyPatterns === 'string'
+      ? [{pattern: route.prettyPatterns}]
+      : Array.isArray(route.prettyPatterns)
+        ? route.prettyPatterns.map(
+          (pattern: PatternType | PrettyPatternType): PrettyPatternType =>
+            (typeof pattern === 'string' ? {pattern} : pattern)
+        )
+        : typeof route.prettyUrl === 'string'
+          ? [{pattern: route.prettyUrl}]
+          : []
+      ;
   }
 
   forEachPrettyPattern(apply: PatternFunctionType<T>): void {
     this.routes.forEach((route: RouteType<T>): void => {
       this.getPrettyUrlPatterns(route).forEach((pattern: PrettyUrlPatternType): any =>
+        // TODO add deprecation message
+        apply(route.page, pattern.pattern, pattern.defaultParams)
+      );
+      this.getPrettyPatterns(route).forEach((pattern: PrettyPatternType): any =>
         apply(route.page, pattern.pattern, pattern.defaultParams)
       );
     });

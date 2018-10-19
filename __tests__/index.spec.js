@@ -4,6 +4,11 @@ import UrlPrettifier from 'next-url-prettifier/index';
 import type {RouteType, PrettyUrlPatternType} from 'next-url-prettifier/index';
 
 const patternString: string = '/page-pretty-url-:id';
+const prettyPatterns: (PrettyPatternType | string)[] = [
+  {pattern: patternString},
+  {pattern: '/page-pretty-url-one', defaultParams: {id: 1}}
+];
+// prettyUrlPatterns is Deprecated
 const prettyUrlPatterns: (PrettyUrlPatternType | string)[] = [
   {pattern: patternString},
   {pattern: '/page-pretty-url-one', defaultParams: {id: 1}}
@@ -45,33 +50,63 @@ describe('UrlPrettifier getPrettyUrl', (): void => {
   });
 });
 
-describe('UrlPrettifier getPrettyUrlPatterns', (): void => {
-  it('should return an empty list if prettyUrlPattern type is not allowed', (): void => {
+describe('UrlPrettifier getPrettyUrlPatterns (DEPRECATED)', (): void => {
+  it('should return an empty list if prettyUrlPattern type is not allowed (DEPRECATED)', (): void => {
     // $FlowIgnore
     expect(router.getPrettyUrlPatterns({...route, prettyUrlPatterns: {patternString}}))
       .toEqual([]);
   });
 
-  it('should return prettyUrl if its type is string and prettyUrlPattern is undefined', (): void => {
+  it('should return prettyUrl if its type is string and prettyUrlPattern is undefined (DEPRECATED)', (): void => {
     // eslint-disable-next-line no-unused-vars
     const {prettyUrlPatterns, ...routeWithoutPatterns}: RouteType<*> = route;
     expect(router.getPrettyUrlPatterns({...routeWithoutPatterns, prettyUrl: '/page-pretty-url-1'}))
       .toEqual([{pattern: '/page-pretty-url-1'}]);
   });
 
-  it('should return a PrettyUrlPatternType if prettyUrlPattern is a string', (): void => {
+  it('should return a PrettyUrlPatternType if prettyUrlPattern is a string (DEPRECATED)', (): void => {
     expect(router.getPrettyUrlPatterns({...route, prettyUrlPatterns: patternString}))
       .toEqual([{pattern: patternString}]);
   });
 
-  it('should return a PrettyUrlPatternType if prettyUrlPattern is an array of string', (): void => {
+  it('should return a PrettyUrlPatternType if prettyUrlPattern is an array of string (DEPRECATED)', (): void => {
     expect(router.getPrettyUrlPatterns({...route, prettyUrlPatterns: [patternString]}))
       .toEqual([{pattern: patternString}]);
   });
 
-  it('should return a PrettyUrlPatternType if prettyUrlPattern is rightly typed', (): void => {
+  it('should return a PrettyUrlPatternType if prettyUrlPattern is rightly typed (DEPRECATED)', (): void => {
     expect(router.getPrettyUrlPatterns({...route, prettyUrlPatterns}))
       .toEqual(prettyUrlPatterns);
+  });
+});
+
+describe('UrlPrettifier getPrettyPatterns', (): void => {
+  it('should return an empty list if prettyPattern type is not allowed', (): void => {
+    // $FlowIgnore
+    expect(router.getPrettyPatterns({...route, prettyPatterns: {patternString}}))
+      .toEqual([]);
+  });
+
+  it('should return prettyUrl if its type is string and prettyPattern is undefined', (): void => {
+    // eslint-disable-next-line no-unused-vars
+    const {prettyPatterns, ...routeWithoutPatterns}: RouteType<*> = route;
+    expect(router.getPrettyPatterns({...routeWithoutPatterns, prettyUrl: '/page-pretty-url-1'}))
+      .toEqual([{pattern: '/page-pretty-url-1'}]);
+  });
+
+  it('should return a PrettyPatternType if prettyPattern is a string', (): void => {
+    expect(router.getPrettyPatterns({...route, prettyPatterns: patternString}))
+      .toEqual([{pattern: patternString}]);
+  });
+
+  it('should return a PrettyPatternType if prettyPattern is an array of string', (): void => {
+    expect(router.getPrettyPatterns({...route, prettyPatterns: [patternString]}))
+      .toEqual([{pattern: patternString}]);
+  });
+
+  it('should return a PrettyPatternType if prettyPattern is rightly typed', (): void => {
+    expect(router.getPrettyPatterns({...route, prettyPatterns}))
+      .toEqual(prettyPatterns);
   });
 });
 
