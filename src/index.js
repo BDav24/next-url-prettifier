@@ -48,6 +48,7 @@ export default class UrlPrettifier<T: string> {
   }
 
   linkPage(pageName: T, params: ParamType): RouteLinkParamsType {
+    // eslint-disable-next-line no-console
     console.warn("linkPage() is deprecated. Use getPrettyUrl() instead.");
     return this.getPrettyUrl(pageName, params);
   }
@@ -75,6 +76,7 @@ export default class UrlPrettifier<T: string> {
   }
 
   forEachPattern(apply: PatternFunctionType<T>): void {
+    // eslint-disable-next-line no-console
     console.warn("forEachPattern() is deprecated. Use forEachPrettyPattern() instead.");
     this.forEachPrettyPattern(apply);
   }
