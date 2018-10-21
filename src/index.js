@@ -7,12 +7,13 @@ import type {RouteLinkParamsType} from './link';
 /* Types */
 export type ParamType = any;
 export type PatternType = string;
-export type PrettyUrlPatternType = {pattern: PatternType, defaultParams?: ParamType};
+export type PrettyPatternType = {pattern: PatternType, defaultParams?: ParamType};
 
 export type RouteType<PageNameType: string> = {
   page: PageNameType,
   prettyUrl?: string | (params: ParamType) => string,
-  prettyUrlPatterns?: PatternType | (PatternType | PrettyUrlPatternType)[]
+  prettyPatterns?: PatternType | (PatternType | PrettyPatternType)[],
+  prettyUrlPatterns?: PatternType | (PatternType | PrettyPatternType)[]
 };
 
 export type PatternFunctionType<PageNameType: string> =
@@ -35,7 +36,7 @@ export default class UrlPrettifier<T: string> {
     ;
   }
 
-  linkPage(pageName: T, params: ParamType): RouteLinkParamsType {
+  getPrettyUrl(pageName: T, params: ParamType): RouteLinkParamsType {
     const route: ?RouteType<T> = this.routes.filter((currentRoute: RouteType<T>): boolean =>
       currentRoute.page === pageName)[0];
     return {
@@ -47,26 +48,55 @@ export default class UrlPrettifier<T: string> {
     };
   }
 
-  getPrettyUrlPatterns(route: RouteType<T>): PrettyUrlPatternType[] {
+  linkPage(pageName: T, params: ParamType): RouteLinkParamsType {
+    // eslint-disable-next-line no-console
+    console.warn("linkPage() is deprecated. Use getPrettyUrl() instead.");
+    return this.getPrettyUrl(pageName, params);
+  }
+
+  getPrettyUrlPatterns(route: RouteType<T>): PrettyPatternType[] {
     return typeof route.prettyUrlPatterns === 'string'
-        ? [{pattern: route.prettyUrlPatterns}]
-        : Array.isArray(route.prettyUrlPatterns)
-          ? route.prettyUrlPatterns.map(
-            (pattern: PatternType | PrettyUrlPatternType): PrettyUrlPatternType =>
-              (typeof pattern === 'string' ? {pattern} : pattern)
-          )
-          : typeof route.prettyUrl === 'string'
-            ? [{pattern: route.prettyUrl}]
-            : []
+      ? [{pattern: route.prettyUrlPatterns}]
+      : Array.isArray(route.prettyUrlPatterns)
+        ? route.prettyUrlPatterns.map(
+          (pattern: PatternType | PrettyPatternType): PrettyPatternType =>
+            (typeof pattern === 'string' ? {pattern} : pattern)
+        )
+        : typeof route.prettyUrl === 'string'
+          ? [{pattern: route.prettyUrl}]
+          : []
+      ;
+  }
+
+  getPrettyPatterns(route: RouteType<T>): PrettyPatternType[] {
+    return typeof route.prettyPatterns === 'string'
+      ? [{pattern: route.prettyPatterns}]
+      : Array.isArray(route.prettyPatterns)
+        ? route.prettyPatterns.map(
+          (pattern: PatternType | PrettyPatternType): PrettyPatternType =>
+            (typeof pattern === 'string' ? {pattern} : pattern)
+        )
+        : typeof route.prettyUrl === 'string'
+          ? [{pattern: route.prettyUrl}]
+          : []
     ;
   }
 
-  forEachPattern(apply: PatternFunctionType<T>): void {
+  forEachPrettyPattern(apply: PatternFunctionType<T>): void {
     this.routes.forEach((route: RouteType<T>): void => {
-      this.getPrettyUrlPatterns(route).forEach((pattern: PrettyUrlPatternType): any =>
+      this.getPrettyUrlPatterns(route).forEach((pattern: PrettyPatternType): any =>
+        apply(route.page, pattern.pattern, pattern.defaultParams)
+      );
+      this.getPrettyPatterns(route).forEach((pattern: PrettyPatternType): any =>
         apply(route.page, pattern.pattern, pattern.defaultParams)
       );
     });
+  }
+
+  forEachPattern(apply: PatternFunctionType<T>): void {
+    // eslint-disable-next-line no-console
+    console.warn("forEachPattern() is deprecated. Use forEachPrettyPattern() instead.");
+    this.forEachPrettyPattern(apply);
   }
 }
 

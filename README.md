@@ -34,8 +34,8 @@ const routes = [
     // `prettyUrl` is used on client side to construct the URL of your link
     prettyUrl: ({lang = '', name = ''}) =>
       (lang === 'fr' ? `/bonjour/${name}` : `/hello/${name}`),
-    // `prettyUrlPatterns` is used on server side to find which component/page to display
-    prettyUrlPatterns: [
+    // `prettyPatterns` is used on server side to find which component/page to display
+    prettyPatterns: [
       {pattern: '/hello/:name', defaultParams: {lang: 'en'}},
       {pattern: '/bonjour/:name', defaultParams: {lang: 'fr'}}
     ]
@@ -64,7 +64,7 @@ export default class GreetingPage extends React.Component {
     const {lang, name} = this.props;
     const switchLang = lang === 'fr' ? 'en' : 'fr';
     return (
-      <Link route={Router.linkPage('greeting', {name, lang: switchLang})}>
+      <Link route={Router.getPrettyUrl('greeting', {name, lang: switchLang})}>
         <a>{switchLang === 'fr' ? 'Français' : 'English'}</a>
       </Link>
     );
@@ -72,7 +72,7 @@ export default class GreetingPage extends React.Component {
     Note: you can also use Next native Link and spread notation:
     import Link from 'next/link';
     return (
-      <Link {...Router.linkPage('greeting', {name, lang: switchLang})}>
+      <Link {...Router.getPrettyUrl('greeting', {name, lang: switchLang})}>
         <a>{switchLang === 'fr' ? 'Français' : 'English'}</a>
       </Link>
     );
@@ -112,7 +112,7 @@ app.prepare()
   .then(() => {
     const server = express();
 
-    Router.forEachPattern((page, pattern, defaultParams) => server.get(pattern, (req, res) =>
+    Router.forEachPrettyPattern((page, pattern, defaultParams) => server.get(pattern, (req, res) =>
       app.render(req, res, `/${page}`, Object.assign({}, defaultParams, req.query, req.params))
     ));
 

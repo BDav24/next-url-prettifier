@@ -11,7 +11,7 @@ app.prepare()
   .then(() => {
     const server = express();
 
-    Router.forEachPattern((page, pattern, defaultParams) => server.get(pattern, (req, res) =>
+    Router.forEachPrettyPattern((page, pattern, defaultParams) => server.get(pattern, (req, res) =>
       app.render(req, res, `/${page}`, Object.assign({}, defaultParams, req.query, req.params))
     ));
 

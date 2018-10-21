@@ -11,7 +11,7 @@ export default function IndexPage() {
   return (
     <div>
       <h1>Homepage</h1>
-      <Link route={Router.linkPage('index', linkParams)}>
+      <Link route={Router.getPrettyUrl('index', linkParams)}>
         <a>Link with complex params</a>
       </Link>
     </div>
