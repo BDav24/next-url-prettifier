@@ -1,6 +1,6 @@
 # Url prettifier for Next Framework
 
-[![npm version](https://d25lcipzij17d.cloudfront.net/badge.svg?id=js&type=6&v=1.1.6&x2=0)](https://www.npmjs.com/package/next-url-prettifier)
+[![npm version](https://img.shields.io/npm/v/next-url-prettifier.svg?style=flat)](https://www.npmjs.com/package/next-url-prettifier)
 
 Easy to use url prettifier for [next.js](https://github.com/zeit/next.js).
 
