@@ -24,6 +24,8 @@ export default class PrettyLink extends React.Component<PropsType> {
     return href || (route && route.href)
       ? <Link {...{...rest, href, children}} {...route} />
       : children
+        ? children
+        : null
     ;
   }
 }
