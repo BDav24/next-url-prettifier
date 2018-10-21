@@ -12,7 +12,7 @@ export default class GreetingPage extends React.Component {
     const {lang, name} = this.props;
     const switchLang = lang === 'fr' ? 'en' : 'fr';
     return (
-      <Link route={Router.linkPage('greeting', {name, lang: switchLang})}>
+      <Link route={Router.getPrettyUrl('greeting', {name, lang: switchLang})}>
         <a>{switchLang === 'fr' ? 'Français' : 'English'}</a>
       </Link>
     );

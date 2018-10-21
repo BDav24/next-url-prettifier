@@ -1,7 +1,7 @@
 /* @flow */
 import UrlPrettifier from 'next-url-prettifier/index';
 // Types
-import type {RouteType, PrettyUrlPatternType} from 'next-url-prettifier/index';
+import type {RouteType, PrettyPatternType} from 'next-url-prettifier/index';
 
 const patternString: string = '/page-pretty-url-:id';
 const prettyPatterns: (PrettyPatternType | string)[] = [
@@ -9,14 +9,14 @@ const prettyPatterns: (PrettyPatternType | string)[] = [
   {pattern: '/page-pretty-url-one', defaultParams: {id: 1}}
 ];
 // prettyUrlPatterns is Deprecated
-const prettyUrlPatterns: (PrettyUrlPatternType | string)[] = [
+const prettyUrlPatterns: (PrettyPatternType | string)[] = [
   {pattern: patternString},
   {pattern: '/page-pretty-url-one', defaultParams: {id: 1}}
 ];
 const route: RouteType<*> = {
   page: 'pageName',
   prettyUrl: ({id}: {id: number}): string => `/page-pretty-url-${id}`,
-  prettyUrlPatterns
+  prettyPatterns
 };
 const router: UrlPrettifier<*> = new UrlPrettifier([route]);
 
@@ -25,6 +25,8 @@ describe('UrlPrettifier options', (): void => {
     const routerWithCustomQs: UrlPrettifier<*> = new UrlPrettifier([route], {
       paramsToQueryString: ({id}: {id: number}): string => `/id/${id}`
     });
+    expect(routerWithCustomQs.linkPage('pageName', {id: 1}))
+      .toEqual({href: '/pageName/id/1', as: '/page-pretty-url-1'});
     expect(routerWithCustomQs.getPrettyUrl('pageName', {id: 1}))
       .toEqual({href: '/pageName/id/1', as: '/page-pretty-url-1'});
   });
@@ -64,17 +66,17 @@ describe('UrlPrettifier getPrettyUrlPatterns (DEPRECATED)', (): void => {
       .toEqual([{pattern: '/page-pretty-url-1'}]);
   });
 
-  it('should return a PrettyUrlPatternType if prettyUrlPattern is a string (DEPRECATED)', (): void => {
+  it('should return a PrettyPatternType if prettyUrlPattern is a string (DEPRECATED)', (): void => {
     expect(router.getPrettyUrlPatterns({...route, prettyUrlPatterns: patternString}))
       .toEqual([{pattern: patternString}]);
   });
 
-  it('should return a PrettyUrlPatternType if prettyUrlPattern is an array of string (DEPRECATED)', (): void => {
+  it('should return a PrettyPatternType if prettyUrlPattern is an array of string (DEPRECATED)', (): void => {
     expect(router.getPrettyUrlPatterns({...route, prettyUrlPatterns: [patternString]}))
       .toEqual([{pattern: patternString}]);
   });
 
-  it('should return a PrettyUrlPatternType if prettyUrlPattern is rightly typed (DEPRECATED)', (): void => {
+  it('should return a PrettyPatternType if prettyUrlPattern is rightly typed (DEPRECATED)', (): void => {
     expect(router.getPrettyUrlPatterns({...route, prettyUrlPatterns}))
       .toEqual(prettyUrlPatterns);
   });
@@ -107,6 +109,21 @@ describe('UrlPrettifier getPrettyPatterns', (): void => {
   it('should return a PrettyPatternType if prettyPattern is rightly typed', (): void => {
     expect(router.getPrettyPatterns({...route, prettyPatterns}))
       .toEqual(prettyPatterns);
+  });
+});
+
+describe('Router forEachPattern (DEPRECATED)', (): void => {
+  it('should iterate on each pattern', (): void => {
+    const router = new UrlPrettifier([{
+      page: 'pageName',
+      prettyUrl: ({id}: {id: number}): string => `/page-pretty-url-${id}`,
+      prettyUrlPatterns
+    }])
+    const mockFunction = jest.fn();
+    router.forEachPattern(mockFunction);
+    expect(mockFunction.mock.calls.length).toBe(2);
+    expect(mockFunction).toHaveBeenCalledWith(route.page, patternString, undefined);
+    expect(mockFunction).toHaveBeenCalledWith(route.page, '/page-pretty-url-one', {id: 1});
   });
 });
 
