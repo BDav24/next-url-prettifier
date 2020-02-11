@@ -50,6 +50,11 @@ describe('UrlPrettifier getPrettyUrl', (): void => {
     expect(router.getPrettyUrl('unknownPage', {id: 1}))
       .toEqual({href: '/unknownPage?id=1'});
   });
+
+  it('should return href and prefetch equal to false if the route does not exist', (): void => {
+    expect(router.getPrettyUrl('unknownPage', {id: 1, preventPrefetchIfNoRoute: true}))
+      .toEqual({href: '/unknownPage?id=1', prefetch: false});
+  });
 });
 
 describe('UrlPrettifier getPrettyUrlPatterns (DEPRECATED)', (): void => {

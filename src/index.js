@@ -36,11 +36,12 @@ export default class UrlPrettifier<T: string> {
     ;
   }
 
-  getPrettyUrl(pageName: T, params: ParamType): RouteLinkParamsType {
+  getPrettyUrl(pageName: T, {preventPrefetchIfNoRoute = false, ...params}: {preventPrefetchIfNoRoute: boolean, params: ParamType}): RouteLinkParamsType {
     const route: ?RouteType<T> = this.routes.filter((currentRoute: RouteType<T>): boolean =>
       currentRoute.page === pageName)[0];
     return {
       href: `/${pageName}${this.paramsToQueryString(params)}`,
+      ...(preventPrefetchIfNoRoute && !route && {prefetch: false}),
       ...(route && route.prettyUrl
         ? {as: typeof route.prettyUrl === 'string' ? route.prettyUrl : route.prettyUrl(params)}
         : {}
